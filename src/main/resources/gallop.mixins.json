@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "com.teamaurora.gallop.core.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "minVersion": "0.8",
+  "refmap": "gallop.refmap.json",
+  "mixins": [
+    "AbstractHorseEntityMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

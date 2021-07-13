@@ -1,0 +1,116 @@
+buildscript {
+    repositories {
+        maven { url = 'https://files.minecraftforge.net/maven' }
+        maven { url = "https://repo.spongepowered.org/repository/maven-public/" }
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
+    }
+}
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
+apply plugin: 'org.spongepowered.mixin'
+
+mixin {
+    add sourceSets.main, "gallop.refmap.json"
+}
+
+version = "${minecraft_version}-${mod_version}"
+group = 'com.teamaurora.gallop'
+archivesBaseName = 'Gallop'
+
+sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
+
+minecraft {
+    mappings channel: 'snapshot', version: "${mappings_version}"
+    //accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+
+    runs {
+        client {
+            workingDirectory project.file('run')
+
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+            property 'mixin.env.disableRefMap', 'true'
+            arg "-mixin.config=gallop.mixins.json"
+
+            mods {
+                gallop {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('run')
+
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+            property 'mixin.env.disableRefMap', 'true'
+            arg "-mixin.config=gallop.mixins.json"
+
+            mods {
+                gallop {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        data {
+            workingDirectory project.file('run')
+
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+
+            args '--mod', 'gallop', '--all', '--output', file('src/generated/resources/')
+
+            mods {
+                gallop {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+jar {
+    manifest {
+        attributes([
+                "Specification-Title": "Gallop",
+                "Specification-Vendor": "Team Aurora",
+                "Specification-Version": "1",
+                "Implementation-Title": project.name,
+                "Implementation-Version": "${version}",
+                "Implementation-Vendor": "Team Aurora",
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                "MixinConfigs": "gallop.mixins.json"
+        ])
+    }
+}
+
+dependencies {
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+
+    runtimeOnly fg.deobf("curse.maven:jei-238222:3157864")
+    runtimeOnly fg.deobf("curse.maven:horse-statistics-409126:3308313")
+    // runtimeOnly fg.deobf("curse.maven:autoreglib-250363:3128555")
+    // runtimeOnly fg.deobf("curse.maven:quark-243121:3221260")
+    // runtimeOnly fg.deobf("curse.maven:farmers-delight-398521:3188508")
+
+    implementation fg.deobf("com.minecraftabnormals:abnormals-core:${minecraft_version}-${ac_version}")
+    // implementation fg.deobf("curse.maven:buzzier-bees-355458:3154937")
+    // implementation fg.deobf("curse.maven:environmental-388992:3221635")
+}
+
+repositories {
+    maven {
+        url = "https://www.cursemaven.com"
+    }
+    maven {
+        url "https://maven.jaackson.me"
+    }
+}
