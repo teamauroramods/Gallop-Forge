@@ -23,6 +23,8 @@ public class Gallop
         REGISTRY_HELPER.register(eventBus);
 
         eventBus.addListener(this::commonSetup);
+
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, GallopConfig.COMMON_SPEC);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

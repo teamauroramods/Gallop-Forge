@@ -1,5 +1,6 @@
 package com.teamaurora.gallop.core.mixin;
 
+import com.teamaurora.gallop.core.GallopConfig;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -31,9 +32,9 @@ public class AbstractHorseEntityMixin extends AnimalEntity {
         // Health
         double myHealth = this.getBaseAttributeValue(Attributes.MAX_HEALTH);
         double otherHealth = otherParent.getBaseAttributeValue(Attributes.MAX_HEALTH);
-        double maxHealth = 30.0;
-        double avgHealthIncrease = 2.33;
-        if (this.rand.nextFloat() < 0.66) {
+        double maxHealth = GallopConfig.COMMON.horseHealthMaxAmount.get();
+        double avgHealthIncrease = GallopConfig.COMMON.horseHealthBetterAmount.get();
+        if (this.rand.nextFloat() < GallopConfig.COMMON.horseHealthBetterPercent.get()) {
             // Better
             double d = Math.max(myHealth, otherHealth) + this.rand.nextDouble() * avgHealthIncrease * 2;
             if (d > maxHealth) d = maxHealth;
@@ -45,9 +46,9 @@ public class AbstractHorseEntityMixin extends AnimalEntity {
         // Jump
         double myJump = this.getBaseAttributeValue(Attributes.HORSE_JUMP_STRENGTH);
         double otherJump = otherParent.getBaseAttributeValue(Attributes.HORSE_JUMP_STRENGTH);
-        double maxJump = 1.0;
-        double avgJumpIncrease = 0.1;
-        if (this.rand.nextFloat() < 0.66) {
+        double maxJump = GallopConfig.COMMON.horseJumpMaxAmount.get();
+        double avgJumpIncrease = GallopConfig.COMMON.horseJumpBetterAmount.get();
+        if (this.rand.nextFloat() < GallopConfig.COMMON.horseJumpBetterPercent.get()) {
             // Better
             double d = Math.max(myJump, otherJump) + this.rand.nextDouble() * avgJumpIncrease * 2;
             if (d > maxJump) d = maxJump;
@@ -59,9 +60,9 @@ public class AbstractHorseEntityMixin extends AnimalEntity {
         // Speed
         double mySpeed = this.getBaseAttributeValue(Attributes.MOVEMENT_SPEED);
         double otherSpeed = otherParent.getBaseAttributeValue(Attributes.MOVEMENT_SPEED);
-        double maxSpeed = 0.3375;
-        double avgSpeedIncrease = 0.0375;
-        if (this.rand.nextFloat() < 0.66) {
+        double maxSpeed = GallopConfig.COMMON.horseSpeedMaxAmount.get();
+        double avgSpeedIncrease = GallopConfig.COMMON.horseSpeedBetterAmount.get();
+        if (this.rand.nextFloat() < GallopConfig.COMMON.horseSpeedBetterPercent.get()) {
             // Better
             double d = Math.max(mySpeed, otherSpeed) + this.rand.nextDouble() * avgSpeedIncrease * 2;
             if (d > maxSpeed) d = maxSpeed;

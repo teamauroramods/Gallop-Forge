@@ -1,5 +1,6 @@
 package com.teamaurora.gallop.common.item;
 
+import com.teamaurora.gallop.core.GallopConfig;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -61,7 +62,7 @@ public class WhistleItem extends Item {
     }
 
     private static boolean isMountable(String entityResourceLocation) {
-        return entityResourceLocation.equals("minecraft:horse");
+        return GallopConfig.COMMON.whistleables.get().contains(entityResourceLocation);
     }
 
     @Override
