@@ -17,8 +17,6 @@ public class GallopConfig {
         public final ForgeConfigSpec.ConfigValue<Double> horseSpeedBetterAmount;
         public final ForgeConfigSpec.ConfigValue<Double> horseSpeedMaxAmount;
 
-        public final ForgeConfigSpec.ConfigValue<ArrayList<String>> whistleables;
-
         Common(ForgeConfigSpec.Builder builder) {
             builder.comment("Common configurations for Gallop").push("common");
 
@@ -43,16 +41,6 @@ public class GallopConfig {
             builder.pop();
 
             builder.pop();
-
-            ArrayList<String> defaultWhistleables = new ArrayList<String>();
-            defaultWhistleables.add("minecraft:horse");
-            defaultWhistleables.add("minecraft:mule");
-            defaultWhistleables.add("minecraft:donkey");
-            defaultWhistleables.add("minecraft:pig");
-            defaultWhistleables.add("minecraft:strider");
-            defaultWhistleables.add("endergetic:booflo");
-
-            whistleables = builder.define("Entities that can be bound to a whistle", defaultWhistleables);
 
             builder.pop();
         }

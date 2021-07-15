@@ -1,6 +1,7 @@
 package com.teamaurora.gallop.common.item;
 
 import com.teamaurora.gallop.core.GallopConfig;
+import com.teamaurora.gallop.core.other.GallopTags;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -18,6 +19,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -85,8 +87,8 @@ public class WhistleItem extends Item {
         return addMountToItemStack(super.getDefaultInstance(), null);
     }
 
-    private static boolean isMountable(String entityResourceLocation) {
-        return GallopConfig.COMMON.whistleables.get().contains(entityResourceLocation);
+    private static boolean isMountable(EntityType<?> entityType) {
+        return GallopTags.Entities.WHISTLEABLES.contains(entityType);
     }
 
     @Override
@@ -96,7 +98,7 @@ public class WhistleItem extends Item {
                 Entity entity = getEntityFromItemStack(sw, stack, target.getPosition(), true);
                 if (entity != null) return super.itemInteractionForEntity(stack, playerIn, target, hand);
             }
-            if (isMountable(EntityType.getKey(target.getType()).toString())) {
+            if (isMountable(target.getType())) {
                 addMountToItemStack(stack, target);
                 return ActionResultType.SUCCESS;
             }
